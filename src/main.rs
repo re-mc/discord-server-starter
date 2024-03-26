@@ -6,7 +6,7 @@ use serenity::prelude::*;
 
 use process_alive;
 
-const TOKEN: &str = "MTIyMjI0MzQ4MzI0MzUxMTg3OA.G0T_Fu.xhf19hwfr2I19A1dmInGGns7f5lc7--TVvCJpE";
+const TOKEN: &str = "[INSERT BOT TOKEN]";
 
 static mut PID: u32 = 0;
 
