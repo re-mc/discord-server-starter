@@ -21,7 +21,7 @@ impl EventHandler for Handler {
                 if process_alive::state(old_pid).is_alive() {
                     let pid = Command::new("java")
                     .args([
-                        "-jar", "purpur.jar", "--nogui"
+                        "-jar", "[INSERT SERVER JAR FILE]", "--nogui"
                     ]).spawn().expect("Failed to Spawn Process").id();
                 PID = pid;
                 }
