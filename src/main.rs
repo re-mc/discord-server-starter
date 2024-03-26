@@ -6,7 +6,7 @@ use serenity::prelude::*;
 
 use process_alive;
 
-const TOKEN: &str = "[INSERT BOT TOKEN]";
+const TOKEN: &str = "[INSERT TOKEN]";
 
 static mut PID: u32 = 0;
 
@@ -18,12 +18,21 @@ impl EventHandler for Handler {
         if msg.content == "!start_server" {
             unsafe {
                 let old_pid = process_alive::Pid::from(PID);
-                if process_alive::state(old_pid).is_alive() {
+                if !process_alive::state(old_pid).is_alive() {
                     let pid = Command::new("java")
                     .args([
                         "-jar", "[INSERT SERVER JAR FILE]", "--nogui"
                     ]).spawn().expect("Failed to Spawn Process").id();
-                PID = pid;
+                    PID = pid;
+                    println!("Started Server.");
+                    if let Err(why) = msg.channel_id.say(&ctx.http, "Server Started!").await {
+                        println!("Error sending message: {why:?}");
+                    }
+                } else {
+                    println!("Server Already Running!");
+                    if let Err(why) = msg.channel_id.say(&ctx.http, "Server Already Running!").await {
+                        println!("Error sending message: {why:?}");
+                    }
                 }
             }
         }
